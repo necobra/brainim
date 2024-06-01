@@ -8,7 +8,7 @@ const NavbarContainer = styled(motion.nav)`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #282c34;
+  background-color: #000;
 `;
 
 const NavLinks = styled.div`
@@ -17,7 +17,7 @@ const NavLinks = styled.div`
 `;
 
 const NavLink = styled(Link)`
-  color: #61dafb;
+  color: #fff;
   text-decoration: none;
   font-size: 1.2rem;
 
@@ -26,12 +26,17 @@ const NavLink = styled(Link)`
   }
 `;
 
-const RegisterButton = styled(motion.button)`
+const AuthButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const AuthButton = styled(motion.button)`
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  color: white;
-  background-color: #61dafb;
-  border: none;
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid #61dafb;
   border-radius: 5px;
   cursor: pointer;
 
@@ -49,13 +54,18 @@ const Navbar = () => {
         >
             <NavLinks>
                 <NavLink to="/">Home</NavLink>
-                <NavLink to="/flashcards">Flashcards</NavLink>
-                <NavLink to="/speedtyping">SpeedTyping</NavLink>
-                <NavLink to="/about">About us</NavLink>
+                <NavLink to="/work">Work</NavLink>
+                <NavLink to="/company">Company</NavLink>
+                <NavLink to="/careers">Careers</NavLink>
             </NavLinks>
-            <RegisterButton whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                Register
-            </RegisterButton>
+            <AuthButtons>
+                <AuthButton whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                    Log In
+                </AuthButton>
+                <AuthButton whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                    Sign Up
+                </AuthButton>
+            </AuthButtons>
         </NavbarContainer>
     );
 };
