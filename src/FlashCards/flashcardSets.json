@@ -1,0 +1,22 @@
+{
+  "sets": [
+    {
+      "name": "Basic Phrases",
+      "cards": [
+        { "english": "Hello", "ukrainian": "Привіт", "score": -1 },
+        { "english": "Goodbye", "ukrainian": "До побачення", "score": -1 },
+        { "english": "Please", "ukrainian": "Будь ласка", "score": -1 },
+        { "english": "Thank you", "ukrainian": "Дякую", "score": -1 }
+      ]
+    },
+    {
+      "name": "Numbers",
+      "cards": [
+        { "english": "One", "ukrainian": "Один", "score": -1 },
+        { "english": "Two", "ukrainian": "Два", "score": -1 },
+        { "english": "Three", "ukrainian": "Три", "score": -1 },
+        { "english": "Four", "ukrainian": "Чотири", "score": -1 }
+      ]
+    }
+  ]
+}

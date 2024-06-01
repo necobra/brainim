@@ -1,0 +1,145 @@
+/* File: src/components/LearningMode.css */
+
+.learning-mode-container {
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.question {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 40px 0;
+
+}
+
+/* beatiful buttons :) */
+.button-13 {
+   background-color: #fff;
+   border: 1px solid #d5d9d9;
+   border-radius: 8px;
+   box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+   box-sizing: border-box;
+   color: #0f1111;
+   cursor: pointer;
+   display: inline-block;
+   font-family: "Amazon Ember",sans-serif;
+   font-size: 13px;
+   line-height: 29px;
+   padding: 0 10px 0 11px;
+   position: relative;
+   text-align: center;
+   text-decoration: none;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+    vertical-align: middle;
+    text-wrap: nowrap;
+}
+
+.button-13:hover {
+    background-color: #f7fafa;
+}
+
+.button-13:focus {
+    border-color: #008296;
+    box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+    outline: 0;
+}
+
+.answers {
+    display: flex;
+    flex-direction: column;
+}
+
+.answer-button {
+    margin: 5px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.answer-button.correct {
+    background-color: #4caf50;
+    color: white;
+}
+
+.correct-answer {
+    margin-top: 20px;
+    font-size: 18px;
+    color: red;
+}
+
+.continue-prompt {
+    margin-top: 20px;
+    font-size: 18px;
+    color: blue;
+    text-align: center;
+}
+
+.end-screen {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.end-screen h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.end-screen ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.end-screen li {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.end-screen button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.answer-button.wrong {
+    background-color: #f44336;
+    color: white;
+}
+
+.end-screen-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.end-screen-card .word-pair {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.end-screen-card .progress-bar-container {
+    width: 100%;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.end-screen-card .progress-bar {
+    height: 20px;
+    background-color: #4caf50;
+}
