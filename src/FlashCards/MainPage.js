@@ -9,7 +9,7 @@ const MainPage = () => {
             <h1>Flashcard Sets</h1>
             <div className="flashcard-sets-list">
                 {flashcardSetsData.sets.map((set, index) => (
-                    <Link key={index} to={`/set/${set.name}`} className="flashcard-set-item">
+                    <Link key={index} to={`/flashcards/set/${set.name}`} className="flashcard-set-item">
                         {set.name}
                     </Link>
                 ))}

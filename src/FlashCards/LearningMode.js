@@ -180,11 +180,11 @@ const LearningMode = ({ flashcards }) => {
 
                 ))}
             </div>
-            {showAnswer && (
-                <div className="correct-answer">
-                    {`Correct Answer: ${currentCard.ukrainian}`}
-                </div>
-            )}
+            {/*{showAnswer && (*/}
+            {/*    <div className="correct-answer">*/}
+            {/*        {`Correct Answer: ${currentCard.ukrainian}`}*/}
+            {/*    </div>*/}
+            {/*)}*/}
             {showContinuePrompt && (
                 <div className="continue-prompt">
                     Press any key on the keyboard to continue

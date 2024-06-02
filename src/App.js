@@ -6,6 +6,7 @@ import SpeedTyping from './Layouts/SpeedTypingLayout';
 import AboutUs from './Layouts/AboutUsLayout';
 import HomeLayout from "./Layouts/HomeLayout";
 import Footer from "./Components/Footer";
+import FlashCardControl from "./FlashCards/FlashCardControl";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomeLayout />} />
                     <Route path="/flashcards" element={<Flashcards />} />
+                    <Route path="/flashcards/set/:setName" element={<FlashCardControl/>} />
                     <Route path="/speedtyping" element={<SpeedTyping />} />
                     <Route path="/about" element={<AboutUs />} />
                 </Routes>
