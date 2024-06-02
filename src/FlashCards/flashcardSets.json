@@ -6,7 +6,11 @@
         { "english": "Hello", "ukrainian": "Привіт", "score": -1 },
         { "english": "Goodbye", "ukrainian": "До побачення", "score": -1 },
         { "english": "Please", "ukrainian": "Будь ласка", "score": -1 },
-        { "english": "Thank you", "ukrainian": "Дякую", "score": -1 }
+        { "english": "Thank you", "ukrainian": "Дякую", "score": -1 },
+        { "english": "Yes", "ukrainian": "Так", "score": -1 },
+        { "english": "No", "ukrainian": "Ні", "score": -1 },
+        { "english": "Excuse me", "ukrainian": "Вибачте", "score": -1 },
+        { "english": "I'm sorry", "ukrainian": "Мені шкода", "score": -1 }
       ]
     },
     {
@@ -15,7 +19,67 @@
         { "english": "One", "ukrainian": "Один", "score": -1 },
         { "english": "Two", "ukrainian": "Два", "score": -1 },
         { "english": "Three", "ukrainian": "Три", "score": -1 },
-        { "english": "Four", "ukrainian": "Чотири", "score": -1 }
+        { "english": "Four", "ukrainian": "Чотири", "score": -1 },
+        { "english": "Five", "ukrainian": "П'ять", "score": -1 },
+        { "english": "Six", "ukrainian": "Шість", "score": -1 },
+        { "english": "Seven", "ukrainian": "Сім", "score": -1 },
+        { "english": "Eight", "ukrainian": "Вісім", "score": -1 }
+      ]
+    },
+    {
+      "name": "Days of the Week",
+      "cards": [
+        { "english": "Monday", "ukrainian": "Понеділок", "score": -1 },
+        { "english": "Tuesday", "ukrainian": "Вівторок", "score": -1 },
+        { "english": "Wednesday", "ukrainian": "Середа", "score": -1 },
+        { "english": "Thursday", "ukrainian": "Четвер", "score": -1 },
+        { "english": "Friday", "ukrainian": "П'ятниця", "score": -1 },
+        { "english": "Saturday", "ukrainian": "Субота", "score": -1 },
+        { "english": "Sunday", "ukrainian": "Неділя", "score": -1 }
+      ]
+    },
+    {
+      "name": "Colors",
+      "cards": [
+        { "english": "Red", "ukrainian": "Червоний", "score": -1 },
+        { "english": "Blue", "ukrainian": "Синій", "score": -1 },
+        { "english": "Green", "ukrainian": "Зелений", "score": -1 },
+        { "english": "Yellow", "ukrainian": "Жовтий", "score": -1 },
+        { "english": "Black", "ukrainian": "Чорний", "score": -1 },
+        { "english": "White", "ukrainian": "Білий", "score": -1 }
+      ]
+    },
+    {
+      "name": "Common Objects",
+      "cards": [
+        { "english": "Table", "ukrainian": "Стіл", "score": -1 },
+        { "english": "Chair", "ukrainian": "Стілець", "score": -1 },
+        { "english": "Window", "ukrainian": "Вікно", "score": -1 }
+      ]
+    },
+    {
+      "name": "IT",
+      "cards": [
+        { "english": "Computer", "ukrainian": "Комп'ютер", "score": -1 },
+        { "english": "Software", "ukrainian": "Програмне забезпечення", "score": -1 },
+        { "english": "Hardware", "ukrainian": "Апаратура", "score": -1 },
+        { "english": "Internet", "ukrainian": "Інтернет", "score": -1 },
+        { "english": "Network", "ukrainian": "Мережа", "score": -1 },
+        { "english": "Server", "ukrainian": "Сервер", "score": -1 },
+        { "english": "Database", "ukrainian": "База даних", "score": -1 },
+        { "english": "Code", "ukrainian": "Код", "score": -1 },
+        { "english": "Programming", "ukrainian": "Програмування", "score": -1 },
+        { "english": "Algorithm", "ukrainian": "Алгоритм", "score": -1 },
+        { "english": "Application", "ukrainian": "Додаток", "score": -1 },
+        { "english": "Operating System", "ukrainian": "Операційна система", "score": -1 },
+        { "english": "User Interface", "ukrainian": "Користувацький інтерфейс", "score": -1 },
+        { "english": "Cloud Computing", "ukrainian": "Хмарні обчислення", "score": -1 },
+        { "english": "Cybersecurity", "ukrainian": "Кібербезпека", "score": -1 },
+        { "english": "Data", "ukrainian": "Дані", "score": -1 },
+        { "english": "Encryption", "ukrainian": "Шифрування", "score": -1 },
+        { "english": "Framework", "ukrainian": "Фреймворк", "score": -1 },
+        { "english": "Protocol", "ukrainian": "Протокол", "score": -1 },
+        { "english": "Virtual Reality", "ukrainian": "Віртуальна реальність", "score": -1 }
       ]
     }
   ]

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import flashcardSetsData from './flashcardSets.json';
-import './MainPage.css'; // Ensure to create this CSS file for styling
+import './MainPage.css';
+import Card from "./Components/Card"; // Ensure to create this CSS file for styling
 
 const MainPage = () => {
     return (
@@ -10,7 +11,7 @@ const MainPage = () => {
             <div className="flashcard-sets-list">
                 {flashcardSetsData.sets.map((set, index) => (
                     <Link key={index} to={`/flashcards/set/${set.name}`} className="flashcard-set-item">
-                        {set.name}
+                        <Card title={set.name} length={set.cards.length}/>
                     </Link>
                 ))}
             </div>

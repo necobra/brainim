@@ -2,12 +2,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+
     height: 100%;
+    min-height: 95vh;
+    margin-top: 0;
+    padding-top: 0;
+    background-color: #ece5e5;
 }
 
 .mode-buttons {
-    margin-top: 20px;
+    background-color: #3a3939;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 /*.mode-buttons {*/
@@ -21,7 +29,7 @@
     cursor: pointer;
     border: 0;
     background-color: transparent;
-    color: blue;
+    color: white;
     font-weight: bold;
 }
 
@@ -31,8 +39,10 @@
 }
 
 .button-55 {
+    width: 70px;
+    height: 40px;
    align-self: center;
-   background-color: #fff;
+   background-color: #131313;
    background-image: none;
    background-position: 0 90%;
    background-repeat: repeat no-repeat;
@@ -40,9 +50,9 @@
    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
    border-style: solid;
    border-width: 2px;
-   box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+   box-shadow: rgba(255, 255, 255, .9) 15px 28px 25px -18px;
    box-sizing: border-box;
-   color: #41403e;
+   color: #ffffff;
    cursor: pointer;
    display: inline-block;
    font-family: Neucha, sans-serif;
@@ -68,4 +78,67 @@
 
 .button-55:focus {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
+
+.flashcard-wrapper {
+    position: static;
+    width: 100%; /* Adjust to the width of your flashcard */
+    height: 100%; /* Adjust to the height of your flashcard */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.flashcard-wrapper.left {
+    animation: swipeOutLeft 0.3s forwards, swipeInLeft 0.3s 0.3s forwards;
+}
+
+.flashcard-wrapper.right {
+    animation: swipeOutRight 0.3s forwards, swipeInRight 0.3s 0.3s forwards;
+}
+
+@keyframes swipeOutLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-10%);
+        opacity: 0;
+    }
+}
+
+@keyframes swipeInLeft {
+    0% {
+        transform: translateX(10%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes swipeOutRight {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(10%);
+        opacity: 0;
+    }
+}
+
+@keyframes swipeInRight {
+    0% {
+        transform: translateX(-10%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.flashcard-control-buttons {
+    margin-top: 20px;
 }

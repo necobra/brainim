@@ -1,0 +1,54 @@
+.card {
+    background-color: #20233b;
+    border-radius: 10px;
+    color: white;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Arial', sans-serif;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.card-body {
+    margin: 10px 0;
+}
+
+.card-terms {
+    background-color: #3a3f5c;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4%;
+}
+
+.card-label {
+    font-size: 12px;
+}
+
+.card-role {
+    background-color: #3a3f5c;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+}

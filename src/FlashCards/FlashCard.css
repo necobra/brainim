@@ -30,7 +30,8 @@
 }
 
 .flashcard-front {
-    background-color: #efefef;
+    background-color: #2f2d2d;
+    color: white;
 }
 
 .flashcard-back {

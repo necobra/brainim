@@ -12,6 +12,7 @@ const FlashCardControl = () => {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
     const [mode, setMode] = useState('cards'); // Default mode
+    const [swipeDirection, setSwipeDirection] = useState(''); // Add swipe direction state
 
     useEffect(() => {
         const set = flashcardSetsData.sets.find(set => set.name === setName);
@@ -25,13 +26,21 @@ const FlashCardControl = () => {
     };
 
     const handleNext = () => {
+        setSwipeDirection('left');
         setIsFlipped(false);
-        setCurrentCardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+        setTimeout(() => {
+            setCurrentCardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+            setSwipeDirection('');
+        }, 300); // Duration of the swipe animation
     };
 
     const handlePrev = () => {
-        setIsFlipped(false);
-        setCurrentCardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
+        setSwipeDirection('right');
+        setTimeout(() => {
+            setIsFlipped(false);
+            setCurrentCardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
+            setSwipeDirection('');
+        }, 300); // Duration of the swipe animation
     };
 
     const handleModeChange = (newMode) => {
@@ -53,20 +62,16 @@ const FlashCardControl = () => {
             </div>
             {mode === 'cards' && (
                 <>
-                    <FlashCard card={currentCard} isFlipped={isFlipped} handleFlip={handleFlip} />
+                    <div className={`flashcard-wrapper ${swipeDirection}`}>
+                        <FlashCard card={currentCard} isFlipped={isFlipped} handleFlip={handleFlip} />
+                    </div>
                     <div className="flashcard-control-buttons">
-                        <button
-                            className={"button-55"}
-                            onClick={handlePrev} disabled={flashcards.length === 0}
-                        >{"<"}</button>
-                        <button
-                            className={"button-55"}
-                            onClick={handleNext} disabled={flashcards.length === 0}
-                        >{">"}</button>
+                        <button onClick={handlePrev} disabled={flashcards.length === 0} className="button-55">Prev</button>
+                        <button onClick={handleNext} disabled={flashcards.length === 0} className="button-55">Next</button>
                     </div>
                 </>
             )}
-            {mode === "learning" && (
+            {mode === 'learning' && (
                 <LearningMode flashcards={learningFlashcards} />
             )}
         </div>
