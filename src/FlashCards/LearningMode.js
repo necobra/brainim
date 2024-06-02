@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './LearningMode.css';
+import flashCard from "./FlashCard";
 
 const LearningMode = ({ flashcards }) => {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -14,10 +15,14 @@ const LearningMode = ({ flashcards }) => {
     const [wrongAnswerIndex, setWrongAnswerIndex] = useState(null); // Track wrong answer index
 
     const flashcardAmount = flashcards.length;
+    const currentCard = currentCardIndex < flashcards.length ? flashcards[currentCardIndex] : problemCards[0];
+    const hasLoaded = useRef(false);
+
 
     useEffect(() => {
-        if (flashcards.length > 0) {
+        if (flashcards.length > 0 && !hasLoaded.current) {
             loadNextCard();
+            hasLoaded.current = true;
         }
     }, [flashcards]);
 
@@ -25,11 +30,8 @@ const LearningMode = ({ flashcards }) => {
         const handleKeyPress = (event) => {
             if (showContinuePrompt) {
                 setShowContinuePrompt(false);
-                if (problemCards.length > 0) {
-                    loadNextCard();
-                } else if (correctAnswersCount < flashcards.length) {
-                    setCurrentCardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
-                    loadNextCard();
+                if (correctAnswersCount < flashcards.length) {
+                    loadNextCard(correctAnswersCount);
                 } else {
                     updateScores();
                     setIsEndScreen(true);
@@ -42,16 +44,25 @@ const LearningMode = ({ flashcards }) => {
         };
     }, [showContinuePrompt, correctAnswersCount, flashcards.length, problemCards.length]);
 
-    const loadNextCard = () => {
-        let card;
-        card = flashcards[0];
-
-        loadAnswers(card);
+    const loadNextCard = (correctAnswers) => {
+        if (hasLoaded.current)
+            setCurrentCardIndex((number) => number + 1);
+        if (correctAnswers === flashcards.length) {
+            updateScores();
+            setIsEndScreen(true);
+        }
+        else
+            loadAnswers(currentCard);
     };
 
 
-    const loadAnswers = (card) => {
-        const incorrectAnswers = flashcards.filter(f => f.ukrainian !== card.ukrainian).slice(0, 3);
+    const loadAnswers = () => {
+        let card;
+        if (hasLoaded.current)
+            card = currentCardIndex + 1 < flashcards.length ? flashcards[currentCardIndex + 1] : problemCards[0];
+        else
+            card = flashcards[0];
+        const incorrectAnswers = flashcards.filter(f => f.ukrainian !== card.ukrainian).sort(() => 0.5 - Math.random()).slice(0, 3);
         const shuffledAnswers = [...incorrectAnswers, card].sort(() => 0.5 - Math.random());
         setAnswers(shuffledAnswers);
         setShowAnswer(false);
@@ -61,15 +72,21 @@ const LearningMode = ({ flashcards }) => {
     const handleAnswerSelection = (answer, index) => {
         setSelectedAnswer(answer);
         setShowAnswer(true);
-        if (answer.ukrainian !== flashcards[currentCardIndex].ukrainian) {
+        if (answer.ukrainian !== currentCard.ukrainian) {
             setWrongAnswerIndex(index);
         } else {
             setWrongAnswerIndex(null);
             setCorrectAnswersCount(correctAnswersCount + 1);
+            if (correctAnswersCount + 1 === flashcards.length) {
+                updateScores();
+                setIsEndScreen(true);
+                return;
+            }
         }
 
         setTimeout(() => {
             const currentCard = flashcards[currentCardIndex];
+
             if (!attempts[currentCard.english]) {
                 attempts[currentCard.english] = 0;
             }
@@ -78,13 +95,12 @@ const LearningMode = ({ flashcards }) => {
                 if (!problemCards.includes(currentCard)) {
                     setProblemCards([...problemCards, currentCard]);
                 }
-                flashcards = [...flashcards, currentCard];
                 setShowContinuePrompt(true);
             } else {
                 setProblemCards(problemCards.filter(card => card.ukrainian !== currentCard.ukrainian));
-                setCurrentCardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
                 loadNextCard(correctAnswersCount + 1);
             }
+
             setAttempts({ ...attempts });
         }, 1000);
     };
@@ -141,32 +157,10 @@ const LearningMode = ({ flashcards }) => {
         return (
             <div className="end-screen">
                 <h2>Productive session!</h2>
-                <button className="button-55" onClick={restartSession}>Restart Session</button>
+                <button className="" onClick={restartSession}>Restart Session</button>
                 <ul>
                     {flashcards.map((card, index) => (
                         <li key={index} className="end-screen-card">
-                            <div className="word-pair">
-                                <div>
-                                    <strong>English:</strong> {card.english} <br />
-                                </div>
-                                <div>
-                                    <strong>Ukrainian:</strong> {card.ukrainian}
-                                </div>
-                            </div>
-                            Progress of learning this card:
-                            <div className="progress-bar-container">
-                                <div
-                                    className="progress-bar"
-                                    style={{
-                                        width: `${card.score}%`,
-                                        backgroundColor: getProgressBarColor(card.score),
-                                    }}
-                                ></div>
-                            </div>
-                        </li>
-                    ))}
-                    {problemCards.map((card, index) => (
-                        <li key={`problem-${index}`} className="end-screen-card problem-card">
                             <div className="word-pair">
                                 <div>
                                     <strong>English:</strong> {card.english} <br />
@@ -192,7 +186,7 @@ const LearningMode = ({ flashcards }) => {
         );
     }
 
-    const currentCard = problemCards.length > 0 ? problemCards[0] : flashcards[currentCardIndex];
+
 
     return (
         <div className="learning-mode-container">
