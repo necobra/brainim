@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {motion} from "framer-motion";
-import {Image} from "antd";
+import {Image} from "semantic-ui-react";
 
 const NavbarContainer = styled.nav`
   width: 100%;
   padding: 1rem 2rem;
-  background: ${({ isScrolled }) => (isScrolled ? '#fff' : 'transparent')};
+  background: ${({ isScrolled }) => (isScrolled ? '#fff' : 'black')};
   color: ${({ isScrolled }) => (isScrolled ? '#000' : '#fff')};
   box-shadow: ${({ isScrolled }) => (isScrolled ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none')};
   position: fixed;
@@ -74,7 +74,9 @@ const Navbar = () => {
 
     return (
         <NavbarContainer isScrolled={isScrolled}>
-            <Image src="/logo.png" width={50}></Image>
+            <Link to="/">
+                <Image src="/logo.png" width={50}></Image>
+            </Link>
             <NavLinks>
                 <Link to="/">Home</Link>
                 <Link to="/flashcards">Flashcards</Link>
