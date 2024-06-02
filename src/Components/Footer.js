@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Icon } from 'semantic-ui-react';
 
 const FooterContainer = styled.footer`
   background-color: #000;
@@ -29,21 +30,20 @@ const Footer = () => {
         <FooterContainer>
             <Column>
                 <h4>About</h4>
-                <FooterLink href="#">Sitemap</FooterLink>
-                <FooterLink href="#">Contact Us</FooterLink>
-                <FooterLink href="#">Religious Ceremonies</FooterLink>
-                <FooterLink href="#">Gazebo Plans</FooterLink>
+                <FooterLink href="#">Something 1</FooterLink>
+                <FooterLink href="/aboutUs">About Us</FooterLink>
+                <FooterLink href="https://distedu.ukma.edu.ua/">University site</FooterLink>
+                <FooterLink href="https://github.com/necobra/brainim"><Icon fitted link name='github' /> Github</FooterLink>
             </Column>
             <Column>
                 <h4>Services</h4>
-                <FooterLink href="#">Banana Pre-Order</FooterLink>
-                <FooterLink href="#">DNA FAQ</FooterLink>
-                <FooterLink href="#">How to Access</FooterLink>
-                <FooterLink href="#">Favorite X-Men</FooterLink>
+                <FooterLink href="#">React Semantic Ui</FooterLink>
+                <FooterLink href="#">Something 1</FooterLink>
+                <FooterLink href="#">Something 2</FooterLink>
+                <FooterLink href="#">Something 3</FooterLink>
             </Column>
             <Column>
-                <h4>Footer Header</h4>
-                <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+                <h4>All rights reserved. © 2024</h4>
             </Column>
         </FooterContainer>
     );

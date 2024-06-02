@@ -1,32 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import {motion} from "framer-motion";
+import {Image} from "antd";
 
-const NavbarContainer = styled(motion.nav)`
+const NavbarContainer = styled.nav`
+  width: 100%;
+  padding: 1rem 2rem;
+  background: ${({ isScrolled }) => (isScrolled ? '#fff' : 'transparent')};
+  color: ${({ isScrolled }) => (isScrolled ? '#000' : '#fff')};
+  box-shadow: ${({ isScrolled }) => (isScrolled ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: #000;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
 `;
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 2rem;
-`;
+  gap: 1rem;
 
-const NavLink = styled(Link)`
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.2rem;
+  a {
+    color: inherit;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s;
 
-  &:hover {
-    color: #21a1f1;
+    &:hover {
+      color: #61dafb;
+    }
   }
 `;
-
 const AuthButtons = styled.div`
+  margin-right: 50px;
   display: flex;
   gap: 1rem;
 `;
@@ -34,35 +44,48 @@ const AuthButtons = styled.div`
 const AuthButton = styled(motion.button)`
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  color: #fff;
-  background-color: transparent;
-  border: 1px solid #61dafb;
+  
+  color: ${({isScrolled}) => (isScrolled ? '#5a5a5a' : '#fff')};
+  background-color: ${({isScrolled}) => (isScrolled ? '#e0e1e2' : 'transparent')};
+  border: 1px solid ${({isScrolled}) => (isScrolled ? '#e0e1e2' : '#e0e1e2')} ;
   border-radius: 5px;
   cursor: pointer;
 
   &:hover {
     background-color: #21a1f1;
+    color: #fff;
   }
 `;
 
 const Navbar = () => {
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    const handleScroll = () => {
+        const offset = window.scrollY;
+        setIsScrolled(offset > 50);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-        <NavbarContainer
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ type: 'spring', stiffness: 120 }}
-        >
+        <NavbarContainer isScrolled={isScrolled}>
+            <Image src="/logo.png" width={50}></Image>
             <NavLinks>
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/work">Work</NavLink>
-                <NavLink to="/company">Company</NavLink>
-                <NavLink to="/careers">Careers</NavLink>
+                <Link to="/">Home</Link>
+                <Link to="/flashcards">Flashcards</Link>
+                <Link to="/speedtyping">SpeedTyping</Link>
+                <Link to="/about">About Us</Link>
             </NavLinks>
             <AuthButtons>
-                <AuthButton whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                <AuthButton isScrolled={isScrolled} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                     Log In
                 </AuthButton>
-                <AuthButton whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                <AuthButton isScrolled={isScrolled} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                     Sign Up
                 </AuthButton>
             </AuthButtons>
