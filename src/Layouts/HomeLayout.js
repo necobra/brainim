@@ -165,7 +165,7 @@ const Home = () => {
                 <ContentContainer>
                     <CardsContainer>
                         <Card whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <CardImage src="https://via.placeholder.com/400x250" alt="Flashcards" />
+                            <CardImage src="/flashcards.png" alt="Flashcards" />
                             <CardContent>
                                 <CardTitle>Flashcards</CardTitle>
                                 <CardDescription>Practice and memorize with our flashcards game.</CardDescription>
@@ -173,7 +173,7 @@ const Home = () => {
                             </CardContent>
                         </Card>
                         <Card whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <CardImage src="https://via.placeholder.com/400x250" alt="SpeedTyping" />
+                            <CardImage src="/speedtyping.jpg" alt="SpeedTyping" />
                             <CardContent>
                                 <CardTitle>SpeedTyping</CardTitle>
                                 <CardDescription>Improve your typing speed with our speed typing game.</CardDescription>
@@ -189,13 +189,13 @@ const Home = () => {
                         </Benefit>
                         <Benefit>
                             <BenefitIcon>⚡</BenefitIcon>
-                            <BenefitTitle>Fast Performance</BenefitTitle>
-                            <BenefitDescription>Experience blazing fast performance with our solutions.</BenefitDescription>
+                            <BenefitTitle>Interesting Idea</BenefitTitle>
+                            <BenefitDescription>An interesting idea with a useful purpose.</BenefitDescription>
                         </Benefit>
                         <Benefit>
-                            <BenefitIcon>🔒</BenefitIcon>
-                            <BenefitTitle>Secure</BenefitTitle>
-                            <BenefitDescription>Your data is safe with our advanced security measures.</BenefitDescription>
+                            <BenefitIcon>📜</BenefitIcon>
+                            <BenefitTitle>Knowledge</BenefitTitle>
+                            <BenefitDescription>Improve your knowledge with us.</BenefitDescription>
                         </Benefit>
                     </BenefitsContainer>
                 </ContentContainer>

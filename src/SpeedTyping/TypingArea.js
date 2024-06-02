@@ -8,7 +8,9 @@ const TypingArea = ({ targetText, currentIndex, incorrectIndex }) => {
                 <span
                     key={index}
                     className={
-                        index === currentIndex
+                    index === incorrectIndex
+                        ? 'incorrect-char'
+                        : index === currentIndex
                             ? 'current-char'
                             : index < currentIndex && incorrectIndex === index
                                 ? 'incorrect-char'
