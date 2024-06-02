@@ -1,0 +1,38 @@
+/* SpeedTyping.css */
+.speed-typing {
+    text-align: center;
+    padding: 20px;
+}
+
+.stats {
+    margin-top: 20px;
+}
+
+.typing-area {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.typed-char {
+    color: gray;
+}
+
+.current-char {
+    background-color: lightblue;
+}
+
+.incorrect-char {
+    color: red;
+    background-color: lightcoral;
+    display: inline-block;
+    margin-left: 2px;
+    padding: 2px;
+    border-radius: 3px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+}

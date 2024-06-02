@@ -5,12 +5,12 @@ import {motion} from "framer-motion";
 import {Image} from "semantic-ui-react";
 
 const NavbarContainer = styled.nav`
-  positon: sticky;
   width: 95vw;
   padding: 1rem 2rem;
   background: ${({ isScrolled }) => (isScrolled ? '#fff' : 'black')};
   color: ${({ isScrolled }) => (isScrolled ? '#000' : '#fff')};
   box-shadow: ${({ isScrolled }) => (isScrolled ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none')};
+  position: sticky;
   top: 0;
   left: 0;
   z-index: 1000;
