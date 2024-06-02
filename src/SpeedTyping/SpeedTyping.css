@@ -1,7 +1,11 @@
-.speed-typing
-{
+/* SpeedTyping.css */
+.speed-typing {
     text-align: center;
     padding: 20px;
+}
+
+.stats {
+    margin-top: 20px;
 }
 
 .typing-area {
@@ -26,6 +30,9 @@
     border-radius: 3px;
 }
 
-.stats {
+button {
+    padding: 10px 20px;
+    font-size: 16px;
     margin-top: 20px;
+    cursor: pointer;
 }

@@ -1,11 +1,8 @@
-// SpeedTyping.js
-
 import React, { useState, useEffect } from 'react';
 import Keyboard from './Keyboard';
 import TypingArea from './TypingArea';
 import './SpeedTyping.css';
-
-const targetText = "Type this text as quickly as you can!";
+import speedTypingSetsData from './speedTypingSets.json';
 
 const SpeedTyping = () => {
     const [userInput, setUserInput] = useState('');
@@ -15,6 +12,10 @@ const SpeedTyping = () => {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [errors, setErrors] = useState(0);
+    const [currentTextIndex, setCurrentTextIndex] = useState(0);
+    const targetTexts = speedTypingSetsData.texts;
+
+    const targetText = targetTexts[currentTextIndex];
 
     const handleKeyPress = (e) => {
         const key = e.key;
@@ -39,17 +40,28 @@ const SpeedTyping = () => {
     };
 
     useEffect(() => {
-        window.addEventListener('keypress', handleKeyPress);
+        window.addEventListener('keydown', handleKeyPress);
         return () => {
-            window.removeEventListener('keypress', handleKeyPress);
+            window.removeEventListener('keydown', handleKeyPress);
         };
-    }, [currentIndex]);
+    }, [currentIndex, currentTextIndex]);
 
     const getWPM = () => {
         if (!endTime || !startTime) return 0;
         const timeDiff = (endTime - startTime) / 1000 / 60; // in minutes
         const wordCount = targetText.split(' ').length;
         return Math.round(wordCount / timeDiff);
+    };
+
+    const handleNextText = () => {
+        setUserInput('');
+        setCurrentIndex(0);
+        setCurrentKey('');
+        setIncorrectIndex(-1);
+        setStartTime(null);
+        setEndTime(null);
+        setErrors(0);
+        setCurrentTextIndex((prevIndex) => (prevIndex + 1) % targetTexts.length);
     };
 
     return (
@@ -61,6 +73,7 @@ const SpeedTyping = () => {
                     <h2>Typing Stats</h2>
                     <p>Words per minute: {getWPM()}</p>
                     <p>Errors: {errors}</p>
+                    <button onClick={handleNextText}>Next Text</button>
                 </div>
             )}
         </div>
