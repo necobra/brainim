@@ -1,0 +1,18 @@
+/* src/TypingArea.css */
+.typing-area {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.current-char {
+    background-color: lightblue;
+    padding: 2px;
+    border-radius: 3px;
+}
+
+.incorrect-char {
+    color: red;
+    background-color: lightcoral;
+    padding: 2px;
+    border-radius: 3px;
+}
