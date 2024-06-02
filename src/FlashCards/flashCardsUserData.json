@@ -1,0 +1,22 @@
+{
+  "sets": [
+    {
+      "name": "Basic Phrases",
+      "amount": 13,
+      "progress": 6,
+      "problem_cards": 3
+    },
+    {
+      "name": "IT",
+      "amount": 20,
+      "progress": 13,
+      "problem_cards": 4
+    },
+    {
+      "name": "Common Objects",
+      "amount": 3,
+      "progress": 3,
+      "problem_cards": 0
+    }
+  ]
+}
