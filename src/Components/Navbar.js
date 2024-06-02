@@ -10,7 +10,7 @@ const NavbarContainer = styled.nav`
   background: ${({ isScrolled }) => (isScrolled ? '#fff' : 'black')};
   color: ${({ isScrolled }) => (isScrolled ? '#000' : '#fff')};
   box-shadow: ${({ isScrolled }) => (isScrolled ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none')};
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   z-index: 1000;
