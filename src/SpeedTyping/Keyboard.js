@@ -1,13 +1,11 @@
-// src/Keyboard.js
 import React from 'react';
 import './Keyboard.css';
 
 const Keyboard = ({ currentKey, nextKey }) => {
     const keys = [
-        '`1234567890-=',
-        'qwertyuiop[]\\',
-        'asdfghjkl;\'',
-        'zxcvbnm,./'
+        '!qwertyuiop',
+        'asdfghjkl',
+        'zxcvbnm,.?'
     ];
 
     const renderKey = (key, keyIndex) => (

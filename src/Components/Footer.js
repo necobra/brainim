@@ -30,17 +30,15 @@ const Footer = () => {
         <FooterContainer>
             <Column>
                 <h4>About</h4>
-                <FooterLink href="#">Something 1</FooterLink>
                 <FooterLink href="/aboutUs">About Us</FooterLink>
                 <FooterLink href="https://distedu.ukma.edu.ua/">University site</FooterLink>
-                <FooterLink href="https://github.com/necobra/brainim"><Icon fitted link name='github' /> Github</FooterLink>
+                <FooterLink href="https://github.com/necobra/brainim"> Github</FooterLink>
             </Column>
             <Column>
                 <h4>Services</h4>
-                <FooterLink href="#">React Semantic Ui</FooterLink>
-                <FooterLink href="#">Something 1</FooterLink>
-                <FooterLink href="#">Something 2</FooterLink>
-                <FooterLink href="#">Something 3</FooterLink>
+                <FooterLink href="https://react.semantic-ui.com/">React Semantic Ui</FooterLink>
+                <FooterLink href="https://react-chartjs-2.js.org/">React-chartjs-2</FooterLink>
+                <FooterLink href="https://copilot.microsoft.com/">Copilot</FooterLink>
             </Column>
             <Column>
                 <h4>All rights reserved. © 2024</h4>
