@@ -35,7 +35,13 @@
 
 .flashcard-control-buttons {
     display: flex;
-    column-gap: 10px;
+    align-items: center;
+    column-gap: 20px;
+}
+
+.current-index-card {
+    color: #6c6c6c;
+    font-weight: bold;
 }
 
 .button-55 {
@@ -47,12 +53,13 @@
    background-position: 0 90%;
    background-repeat: repeat no-repeat;
    background-size: 4px 3px;
-   border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border: 2px solid ;
+   border-radius: 15px 225px 255px 15px;
    border-style: solid;
    border-width: 2px;
-   box-shadow: rgba(255, 255, 255, .9) 15px 28px 25px -18px;
+   box-shadow: rgba(5, 5, 5, 0.1) 15px 28px 25px -18px;
    box-sizing: border-box;
-   color: #ffffff;
+   color: #000000;
    cursor: pointer;
    display: inline-block;
    font-family: Neucha, sans-serif;
@@ -74,10 +81,15 @@
 .button-55:hover {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
     transform: translate3d(0, 2px, 0);
+    background-color: #0f1111;
 }
 
 .button-55:focus {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
+
+.button-55 span {
+    color: white;
 }
 
 .flashcard-wrapper {

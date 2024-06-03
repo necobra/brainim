@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './LearningMode.css';
 import flashCard from "./FlashCard";
+import './Components/QuestionCard.css';
 
 const LearningMode = ({ flashcards }) => {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -13,6 +14,7 @@ const LearningMode = ({ flashcards }) => {
     const [attempts, setAttempts] = useState({});
     const [isEndScreen, setIsEndScreen] = useState(false);
     const [wrongAnswerIndex, setWrongAnswerIndex] = useState(null); // Track wrong answer index
+    const audioRef = useRef(null);
 
     const flashcardAmount = flashcards.length;
     const currentCard = currentCardIndex < flashcards.length ? flashcards[currentCardIndex] : problemCards[0];
@@ -55,13 +57,28 @@ const LearningMode = ({ flashcards }) => {
             loadAnswers(currentCard);
     };
 
-
+    function sumValues(obj) {
+        return Object.values(obj).reduce((acc, value) => acc + value, 0);
+    }
     const loadAnswers = () => {
         let card;
-        if (hasLoaded.current)
+        if (hasLoaded.current){
             card = currentCardIndex + 1 < flashcards.length ? flashcards[currentCardIndex + 1] : problemCards[0];
+            if (sumValues(attempts) >= flashcards.length - correctAnswersCount) {
+                if (problemCards.length > 1)
+                    card = problemCards[1];
+                else
+                    card = problemCards[0]
+            }
+            console.log(card);
+            console.log(sumValues(attempts));
+            console.log(flashcards.length - correctAnswersCount);
+            console.log(problemCards);
+        }
         else
             card = flashcards[0];
+
+
         const incorrectAnswers = flashcards.filter(f => f.ukrainian !== card.ukrainian).sort(() => 0.5 - Math.random()).slice(0, 3);
         const shuffledAnswers = [...incorrectAnswers, card].sort(() => 0.5 - Math.random());
         setAnswers(shuffledAnswers);
@@ -70,6 +87,8 @@ const LearningMode = ({ flashcards }) => {
     }
 
     const handleAnswerSelection = (answer, index) => {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
         setSelectedAnswer(answer);
         setShowAnswer(true);
         if (answer.ukrainian !== currentCard.ukrainian) {
@@ -77,6 +96,7 @@ const LearningMode = ({ flashcards }) => {
         } else {
             setWrongAnswerIndex(null);
             setCorrectAnswersCount(correctAnswersCount + 1);
+            audioRef.current.play();
             if (correctAnswersCount + 1 === flashcards.length) {
                 updateScores();
                 setIsEndScreen(true);
@@ -85,8 +105,6 @@ const LearningMode = ({ flashcards }) => {
         }
 
         setTimeout(() => {
-            const currentCard = flashcards[currentCardIndex];
-
             if (!attempts[currentCard.english]) {
                 attempts[currentCard.english] = 0;
             }
@@ -122,11 +140,11 @@ const LearningMode = ({ flashcards }) => {
     };
 
     const saveScores = (updatedFlashcards) => {
-        // Simulate saving scores using localStorage
         localStorage.setItem('flashcards', JSON.stringify(updatedFlashcards));
     };
 
     const restartSession = () => {
+        hasLoaded.current = false;
         setCurrentCardIndex(0);
         setProblemCards([]);
         setAnswers([]);
@@ -137,6 +155,8 @@ const LearningMode = ({ flashcards }) => {
         setIsEndScreen(false);
         setAttempts({});
         loadNextCard();
+        flashcards = [];
+        hasLoaded.current = true;
     };
 
     const getProgressBarColor = (score) => {
@@ -156,8 +176,9 @@ const LearningMode = ({ flashcards }) => {
     if (isEndScreen) {
         return (
             <div className="end-screen">
+                <audio ref={audioRef} src="/success.mp3" />
                 <h2>Productive session!</h2>
-                <button className="" onClick={restartSession}>Restart Session</button>
+                <button className=""    >Restart Session</button>
                 <ul>
                     {flashcards.map((card, index) => (
                         <li key={index} className="end-screen-card">
@@ -190,22 +211,48 @@ const LearningMode = ({ flashcards }) => {
 
     return (
         <div className="learning-mode-container">
+            <audio ref={audioRef} src="/success.mp3" />
             <div className="answer-count">
                 {correctAnswersCount}/{flashcardAmount}
             </div>
-            <div className="question">{currentCard.english}</div>
-            <div className="answers">
-                {answers.map((answer, index) => (
-                    <button
-                        key={index}
-                        className={`button-13 answer-button ${showAnswer && answer.ukrainian === currentCard.ukrainian ? 'correct' : ''} ${showAnswer && selectedAnswer && index === wrongAnswerIndex ? 'wrong' : ''}`}
-                        onClick={() => handleAnswerSelection(answer, index)}
-                        disabled={showAnswer}
-                    >
-                        {answer.ukrainian}
-                    </button>
-                ))}
+
+            <div className="question-card">
+                <div className="question-header">
+                    <span className="question-title">Definition</span>
+                    <button className="sound-button">🔊</button>
+                </div>
+                <div className="question-text">{currentCard.english}</div>
+                <div className="answers">
+                    {
+                        answers.map((answer, index) => (
+                        <button key={index}
+                                className={`answer-button ${showAnswer && answer.ukrainian === currentCard.ukrainian ? 'correct' : ''} ${showAnswer && selectedAnswer && index === wrongAnswerIndex ? 'wrong' : ''}`}
+                                onClick={() => handleAnswerSelection(answer, index)}
+                                disabled={showAnswer}
+                        >
+
+                            {answer.ukrainian}
+                        </button>
+                    ))}
+                </div>
+                <div className="footer">
+                    <span className="hint-text">Dont know?</span>
+                </div>
             </div>
+
+            {/*<div className="question">{currentCard.english}</div>*/}
+            {/*<div className="answers">*/}
+            {/*    {answers.map((answer, index) => (*/}
+            {/*        <button*/}
+            {/*            key={index}*/}
+            {/*            className={`button-13 answer-button ${showAnswer && answer.ukrainian === currentCard.ukrainian ? 'correct' : ''} ${showAnswer && selectedAnswer && index === wrongAnswerIndex ? 'wrong' : ''}`}*/}
+            {/*            onClick={() => handleAnswerSelection(answer, index)}*/}
+            {/*            disabled={showAnswer}*/}
+            {/*        >*/}
+            {/*            {answer.ukrainian}*/}
+            {/*        </button>*/}
+            {/*    ))}*/}
+            {/*</div>*/}
             {showContinuePrompt && (
                 <div className="continue-prompt">
                     Press any key on the keyboard to continue

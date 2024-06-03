@@ -14,6 +14,8 @@ const FlashCardControl = () => {
     const [mode, setMode] = useState('cards'); // Default mode
     const [swipeDirection, setSwipeDirection] = useState(''); // Add swipe direction state
 
+    const [visualCurrentCardIndex, setVisualCurrentCardIndex] = useState(0);
+
     useEffect(() => {
         const set = flashcardSetsData.sets.find(set => set.name === setName);
         if (set) {
@@ -28,6 +30,7 @@ const FlashCardControl = () => {
     const handleNext = () => {
         setSwipeDirection('left');
         setIsFlipped(false);
+        setVisualCurrentCardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
         setTimeout(() => {
             setCurrentCardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
             setSwipeDirection('');
@@ -36,6 +39,7 @@ const FlashCardControl = () => {
 
     const handlePrev = () => {
         setSwipeDirection('right');
+        setVisualCurrentCardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
         setTimeout(() => {
             setIsFlipped(false);
             setCurrentCardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
@@ -66,8 +70,11 @@ const FlashCardControl = () => {
                         <FlashCard card={currentCard} isFlipped={isFlipped} handleFlip={handleFlip} />
                     </div>
                     <div className="flashcard-control-buttons">
-                        <button onClick={handlePrev} disabled={flashcards.length === 0} className="button-55">Prev</button>
-                        <button onClick={handleNext} disabled={flashcards.length === 0} className="button-55">Next</button>
+                        <button onClick={handlePrev} disabled={flashcards.length === 0} className="button-55"><span>Prev</span></button>
+                        <div className="current-index-card">
+                            {visualCurrentCardIndex + 1}/{flashcards.length}
+                        </div>
+                        <button onClick={handleNext} disabled={flashcards.length === 0} className="button-55"><span>Next</span></button>
                     </div>
                 </>
             )}

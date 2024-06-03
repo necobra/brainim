@@ -8,6 +8,12 @@
     font-family: 'Arial', sans-serif;
 }
 
+
+.card:hover {
+    background-color: #111723;
+    transition: background-color .5s;
+}
+
 .card-header {
     display: flex;
     justify-content: space-between;
