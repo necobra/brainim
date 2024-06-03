@@ -48,9 +48,9 @@ const SpeedTyping = () => {
         if (key === targetText[currentIndex]) {
             setUserInput((prev) => prev + key);
             setCurrentIndex((prevIndex) => prevIndex + 1);
-            setIncorrectIndex(-1); // Reset incorrect index
+            setIncorrectIndex(-1);
         } else {
-            setIncorrectIndex(currentIndex); // Mark incorrect index
+            setIncorrectIndex(currentIndex);
             setErrors((prevErrors) => prevErrors + 1);
         }
 
@@ -81,7 +81,7 @@ const SpeedTyping = () => {
 
     const getWPM = () => {
         if (!endTime || !startTime) return 0;
-        const timeDiff = (endTime - startTime) / 1000 / 60; // in minutes
+        const timeDiff = (endTime - startTime) / 1000 / 60;
         const wordCount = targetText.split(' ').length;
         return Math.round(wordCount / timeDiff);
     };
@@ -95,7 +95,7 @@ const SpeedTyping = () => {
         setEndTime(null);
         setErrors(0);
         setIsEnd(false);
-        setCurrentTextIndex(Math.floor(Math.random() * (targetText.length - 1) + 1));
+        setCurrentTextIndex(Math.floor(Math.random() * (targetTexts.length - 1)) + 1);
     };
 
     return (

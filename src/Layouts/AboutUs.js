@@ -111,14 +111,6 @@ const AboutUs = () => {
                     <DeveloperImage src="developer2.jpg" alt="Developer 2" />
                     <DeveloperName>Baiush Oleksandr</DeveloperName>
                     <DeveloperRole>Genius, billionaire, playboy, philanthropist.</DeveloperRole>
-                    <DeveloperLinks>
-                        <DeveloperLink href="https://github.com" target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-github"></i>
-                        </DeveloperLink>
-                        <DeveloperLink href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-linkedin"></i>
-                        </DeveloperLink>
-                    </DeveloperLinks>
                 </DeveloperCard>
                 </Link>
             </DevelopersContainer>

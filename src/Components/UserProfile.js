@@ -108,7 +108,6 @@ const UserProfile = () => {
     useEffect(() => {
         const logs = speedTypingResults.accounts[0].logs;
 
-        // Get last 7 days
         const today = new Date();
         const last7Days = Array.from({ length: 7 }, (_, i) => format(subDays(today, i), 'yyyy-MM-dd')).reverse();
 
