@@ -163,3 +163,8 @@
     height: 20px;
     background-color: #4caf50;
 }
+
+.answer-count {
+    margin-bottom: 20px;
+    color: #565454;
+}
