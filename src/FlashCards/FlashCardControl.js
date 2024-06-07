@@ -54,9 +54,18 @@ const FlashCardControl = () => {
     };
 
     const handleModeChange = (newMode) => {
+
         if (newMode === 'learning') {
-            const filteredCards = flashcards.filter(card => card.score < 100).slice(0, 7);
-            setLearningFlashcards(filteredCards);
+            const shuffleArray = array => {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            const filteredCards = flashcards.filter(card => card.score < 100);
+            const shuffledFilteredCards = shuffleArray(filteredCards).slice(0, 7);
+            setLearningFlashcards(shuffledFilteredCards);
         }
         setMode(newMode);
     };
@@ -84,7 +93,7 @@ const FlashCardControl = () => {
                 </>
             )}
             {mode === 'learning' && (
-                <LearningMode flashcards={learningFlashcards} />
+                <LearningMode flashcards={learningFlashcards} onRestart={handleModeChange}/>
             )}
         </div>
     );

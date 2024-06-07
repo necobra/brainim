@@ -2,8 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import './LearningMode.css';
 import './Components/QuestionCard.css';
 
-
-const LearningMode = ({ flashcards }) => {
+const LearningMode = ({ flashcards, onRestart }) => {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [problemCards, setProblemCards] = useState([]);
     const [answers, setAnswers] = useState([]);
@@ -159,6 +158,7 @@ const LearningMode = ({ flashcards }) => {
     };
 
     const restartSession = () => {
+        onRestart("learning");
         hasLoaded.current = false;
         setCurrentCardIndex(0);
         setProblemCards([]);
@@ -170,7 +170,6 @@ const LearningMode = ({ flashcards }) => {
         setIsEndScreen(false);
         setAttempts({});
         loadNextCard();
-        flashcards = [];
         hasLoaded.current = true;
     };
 
@@ -193,7 +192,7 @@ const LearningMode = ({ flashcards }) => {
             <div className="end-screen">
                 <audio ref={audioRef} src="/success.mp3" />
                 <h2>Productive session!</h2>
-                <button className=""    >Restart Session</button>
+                <button className="" onClick={() => restartSession()}   >Restart Session</button>
                 <ul>
                     {flashcards.map((card, index) => (
                         <li key={index} className="end-screen-card">
@@ -234,7 +233,7 @@ const LearningMode = ({ flashcards }) => {
             <div className="question-card">
                 <div className="question-header">
                     <span className="question-title">Definition</span>
-                    <button className="sound-button">🔊</button>
+                    {/*<button className="sound-button">🔊</button>*/}
                 </div>
                 <div className="question-text">{currentCard.english}</div>
                 <div className="answers">
