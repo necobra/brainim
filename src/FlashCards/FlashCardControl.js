@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import FlashCard from './FlashCard';
 import LearningMode from './LearningMode';
-import flashcardSetsData from './flashcardSets.json';
 import './FlashCardControl.css';
+import flashcardSetsDataJson from "./flashcardSets.json";
 
 const FlashCardControl = () => {
     const { setName } = useParams();
@@ -15,6 +15,12 @@ const FlashCardControl = () => {
     const [swipeDirection, setSwipeDirection] = useState(''); // Add swipe direction state
 
     const [visualCurrentCardIndex, setVisualCurrentCardIndex] = useState(0);
+
+    let flashcardSetsData = JSON.parse(localStorage.getItem('flashcardSets'));
+    if (flashcardSetsData === null) {
+        localStorage.setItem('flashcardSets', JSON.stringify(flashcardSetsDataJson));
+        flashcardSetsData = flashcardSetsDataJson;
+    }
 
     useEffect(() => {
         const set = flashcardSetsData.sets.find(set => set.name === setName);

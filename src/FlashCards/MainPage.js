@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import flashcardSetsData from './flashcardSets.json';
+import flashcardSetsDataJson from './flashcardSets.json';
 import './MainPage.css';
 import Card from "./Components/Card"; // Ensure to create this CSS file for styling
 
 const MainPage = () => {
+    let flashcardSetsData = JSON.parse(localStorage.getItem('flashcardSets'));
+    if (flashcardSetsData === null) {
+        localStorage.setItem('flashcardSets', JSON.stringify(flashcardSetsDataJson));
+        flashcardSetsData = flashcardSetsDataJson;
+    }
     return (
         <div className="main-page-container">
             <h1>Flashcard Sets</h1>
