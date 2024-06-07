@@ -14,10 +14,21 @@ const LearningMode = ({ flashcards, onRestart }) => {
     const [isEndScreen, setIsEndScreen] = useState(false);
     const [wrongAnswerIndex, setWrongAnswerIndex] = useState(null); // Track wrong answer index
     const audioRef = useRef(null);
-
+    const [readyToContinue, setReadyToContinue] = useState(false);
     const flashcardAmount = flashcards.length;
-    const currentCard = currentCardIndex < flashcards.length ? flashcards[currentCardIndex] : problemCards[0];
+    // const currentCard = currentCardIndex < flashcards.length ? flashcards[currentCardIndex] : problemCards[0];
     const hasLoaded = useRef(false);
+    const [currentCard, setCurrentCard] = useState(flashcards[0]);
+
+
+
+    useEffect(() => {
+        setCurrentCard(currentCardIndex < flashcards.length ? flashcards[currentCardIndex] : problemCards[0]);
+    }, [currentCardIndex, flashcards, problemCards]);
+
+    useEffect(() => {
+        loadAnswers(currentCard);
+    }, [currentCard]);
 
 
     useEffect(() => {
@@ -27,24 +38,44 @@ const LearningMode = ({ flashcards, onRestart }) => {
         }
     }, [flashcards]);
 
+    const handleKeyPress = () => {
+        if (showContinuePrompt) {
+            console.log("handleKeyPressStart");
+            setShowContinuePrompt(false);
+            if (correctAnswersCount < flashcards.length) {
+                console.log("loadNext");
+                console.log(readyToContinue);
+                setReadyToContinue(true);
+            } else {
+                updateScores();
+                setIsEndScreen(true);
+            }
+        }
+    };
+
     useEffect(() => {
-        const handleKeyPress = (event) => {
-            if (showContinuePrompt) {
-                setShowContinuePrompt(false);
-                if (correctAnswersCount < flashcards.length) {
-                    loadNextCard(correctAnswersCount);
-                } else {
-                    updateScores();
-                    setIsEndScreen(true);
-                }
+        const handleKeyDown = (event) => {
+            if (event.key === 'Enter') {
+                handleKeyPress();
             }
         };
-        window.addEventListener('keydown', handleKeyPress);
-        return () => {
-            window.removeEventListener('keydown', handleKeyPress);
-        };
-    }, [showContinuePrompt, correctAnswersCount, flashcards.length, problemCards.length]);
 
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [showContinuePrompt, correctAnswersCount, readyToContinue, flashcards.length]);
+
+    useEffect(() => {
+        console.log("effectReadyToContinue");
+        console.log(readyToContinue);
+        if (readyToContinue) {
+            console.log("readyToContinue");
+            loadNextCard(correctAnswersCount);
+            setReadyToContinue(false);
+        }
+    }, [readyToContinue, correctAnswersCount]);
     const loadNextCard = (correctAnswers) => {
         if (hasLoaded.current)
             setCurrentCardIndex((number) => number + 1);
@@ -52,30 +83,13 @@ const LearningMode = ({ flashcards, onRestart }) => {
             updateScores();
             setIsEndScreen(true);
         }
-        else
-            loadAnswers(currentCard);
     };
 
     function sumValues(obj) {
         return Object.values(obj).reduce((acc, value) => acc + value, 0);
     }
-    const loadAnswers = () => {
-        let card;
-        if (hasLoaded.current){
-            card = currentCardIndex + 1 < flashcards.length ? flashcards[currentCardIndex + 1] : problemCards[0];
-            if (sumValues(attempts) >= flashcards.length - correctAnswersCount) {
-                if (problemCards.length > 1)
-                    card = problemCards[1];
-                else
-                    card = problemCards[0]
-            }
-            console.log(card);
-            console.log(sumValues(attempts));
-            console.log(flashcards.length - correctAnswersCount);
-            console.log(problemCards);
-        }
-        else
-            card = flashcards[0];
+    const loadAnswers = (card) => {
+        console.log(card);
 
 
         const incorrectAnswers = flashcards.filter(f => f.ukrainian !== card.ukrainian).sort(() => 0.5 - Math.random()).slice(0, 3);
@@ -123,6 +137,7 @@ const LearningMode = ({ flashcards, onRestart }) => {
     };
 
     const updateScores = () => {
+        console.log("end");
         flashcards.forEach(card => {
             const mistakes = attempts[card.english] || 0;
             if (mistakes === 0) {
