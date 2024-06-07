@@ -2,6 +2,10 @@ import React, {useState, useEffect, useRef} from 'react';
 import './LearningMode.css';
 import flashCard from "./FlashCard";
 import './Components/QuestionCard.css';
+import flashcardSetsData from './flashcardSets.json';
+import fs from 'fs';
+import path from 'path';
+
 
 const LearningMode = ({ flashcards }) => {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -140,7 +144,22 @@ const LearningMode = ({ flashcards }) => {
     };
 
     const saveScores = (updatedFlashcards) => {
-        localStorage.setItem('flashcards', JSON.stringify(updatedFlashcards));
+        const updatedSets = flashcardSetsData.sets.map(set => {
+            return {
+                ...set,
+                cards: set.cards.map(card => {
+                    const updatedCard = updatedFlashcards.find(
+                        updated => updated.english === card.english && updated.ukrainian === card.ukrainian
+                    );
+                    return updatedCard ? { ...card, score: updatedCard.score } : card;
+                })
+            };
+        });
+
+        const updatedData = { sets: updatedSets };
+
+        const filePath = path.resolve(__dirname, 'flashcardSetsData.json');
+        fs.writeFileSync(filePath, JSON.stringify(updatedData, null, 2), 'utf-8');
     };
 
     const restartSession = () => {
