@@ -62,7 +62,6 @@ const FlashCardControl = () => {
             <div className="mode-buttons">
                 <button onClick={() => handleModeChange('cards')}>Cards</button>
                 <button onClick={() => handleModeChange('learning')}>Learning</button>
-                <button onClick={() => handleModeChange('selection')}>Selection</button>
             </div>
             {mode === 'cards' && (
                 <>
