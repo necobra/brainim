@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import './LearningMode.css';
 import './Components/QuestionCard.css';
 
@@ -19,16 +19,19 @@ const LearningMode = ({ flashcards, onRestart }) => {
     // const currentCard = currentCardIndex < flashcards.length ? flashcards[currentCardIndex] : problemCards[0];
     const hasLoaded = useRef(false);
     const [currentCard, setCurrentCard] = useState(flashcards[0]);
-
+    const [loadAns, setLoadAns] = useState(false);
+    const [loadNext, setLoadNext] = useState(false);
+    const [currentCardChanged, setCurrentCardChanged] = useState(false);
 
 
     useEffect(() => {
+        setCurrentCardChanged(false);
+        console.log("set current card " + currentCardIndex);
         setCurrentCard(currentCardIndex < flashcards.length ? flashcards[currentCardIndex] : problemCards[0]);
-    }, [currentCardIndex, flashcards, problemCards]);
+        setCurrentCardChanged(true);
+    }, [currentCardIndex, flashcards, problemCards, readyToContinue]);
 
-    useEffect(() => {
-        loadAnswers(currentCard);
-    }, [currentCard]);
+
 
 
     useEffect(() => {
@@ -38,20 +41,20 @@ const LearningMode = ({ flashcards, onRestart }) => {
         }
     }, [flashcards]);
 
-    const handleKeyPress = () => {
+    const handleKeyPress = useCallback(() => {
         if (showContinuePrompt) {
-            console.log("handleKeyPressStart");
             setShowContinuePrompt(false);
             if (correctAnswersCount < flashcards.length) {
-                console.log("loadNext");
-                console.log(readyToContinue);
                 setReadyToContinue(true);
+
+                setLoadAns(true);
+                // setLoadNext(true);
             } else {
-                updateScores();
                 setIsEndScreen(true);
+                updateScores();
             }
         }
-    };
+    }, [showContinuePrompt, correctAnswersCount, flashcards.length]);
 
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -65,32 +68,45 @@ const LearningMode = ({ flashcards, onRestart }) => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [showContinuePrompt, correctAnswersCount, readyToContinue, flashcards.length]);
+    }, [handleKeyPress]);
 
-    useEffect(() => {
-        console.log("effectReadyToContinue");
-        console.log(readyToContinue);
-        if (readyToContinue) {
-            console.log("readyToContinue");
-            loadNextCard(correctAnswersCount);
-            setReadyToContinue(false);
-        }
-    }, [readyToContinue, correctAnswersCount]);
     const loadNextCard = (correctAnswers) => {
+        setReadyToContinue(false);
+        setLoadNext(false);
         if (hasLoaded.current)
             setCurrentCardIndex((number) => number + 1);
         if (correctAnswers === flashcards.length) {
             updateScores();
             setIsEndScreen(true);
         }
+        console.log("loadNextCard curIndex" + currentCardIndex);
     };
 
-    function sumValues(obj) {
-        return Object.values(obj).reduce((acc, value) => acc + value, 0);
-    }
+
+
+
+    useEffect(() => {
+        if (readyToContinue) {
+            loadNextCard(correctAnswersCount);
+
+        }
+    }, [readyToContinue, correctAnswersCount, loadNextCard, loadNext]);
+
+    useEffect(() => {
+        console.log("load answers");
+        loadAnswers(currentCard);
+    }, [currentCard]);
+
+    useEffect(() => {
+        console.log("load answers");
+        if (loadAns) {
+            loadAnswers(currentCard);
+        }
+    }, [loadAns]);
+
     const loadAnswers = (card) => {
         console.log(card);
-
+        setLoadAns(false);
 
         const incorrectAnswers = flashcards.filter(f => f.ukrainian !== card.ukrainian).sort(() => 0.5 - Math.random()).slice(0, 3);
         const shuffledAnswers = [...incorrectAnswers, card].sort(() => 0.5 - Math.random());

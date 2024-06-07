@@ -102,8 +102,27 @@ const UserProfile = () => {
         ],
     });
 
+    const [flashcardSetsData, setFlashcardSetsData] = useState([]);
+
     const highestWPM = speedTypingResults.accounts[0].logs.reduce((acc, log) => Math.max(acc, log.wpm), 0);
     const gamesPlayed = speedTypingResults.accounts[0].logs.length;
+
+    const formatSet = (set) => {
+          const returnedSet = {
+              name: set.name,
+              amount: set.cards.length,
+              completed: 0,
+              problem_card: 0,
+          }
+          for (let card of set.cards) {
+              if (card.score === 100) {
+                  returnedSet.completed++;
+              } else if (card.score < 100) {
+                  returnedSet.problem_card++;
+              }
+          }
+          return returnedSet;
+    };
 
     useEffect(() => {
         const logs = speedTypingResults.accounts[0].logs;
@@ -129,6 +148,22 @@ const UserProfile = () => {
                 },
             ],
         });
+
+
+        const flashcardSetLastVisited = localStorage.getItem('lastVisitedSet');
+        const flashcardSetPreLastVisited = localStorage.getItem('preLastVisitedSet');
+        const flashcardSetPrePreLastVisited = localStorage.getItem('prePreLastVisitedSet');
+        const flashcardData = [];
+        if (flashcardSetLastVisited) {
+            flashcardData.push(formatSet(flashcardSetLastVisited));
+        }
+        if (flashcardSetPreLastVisited) {
+            flashcardData.push(formatSet(flashcardSetPreLastVisited));
+        }
+        if (flashcardSetPrePreLastVisited) {
+            flashcardData.push(formatSet(flashcardSetPrePreLastVisited));
+        }
+        setFlashcardSetsData(flashcardData);
     }, []);
 
     return (
