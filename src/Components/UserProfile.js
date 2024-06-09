@@ -88,6 +88,27 @@ const Divider = styled.hr`
   margin: 2rem 0;
 `;
 
+const FlashcardSetContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+`;
+
+const FlashcardSetCard = styled.div`
+  background-color: #444;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: left;
+  flex: 1 1 30%;
+  min-width: 250px;
+  max-width: 300px;
+
+  & p {
+    margin: 0.5rem 0;
+  }
+`;
+
 const UserProfile = () => {
     const [speedTypingData, setSpeedTypingData] = useState({
         labels: [],
@@ -108,20 +129,20 @@ const UserProfile = () => {
     const gamesPlayed = speedTypingResults.accounts[0].logs.length;
 
     const formatSet = (set) => {
-          const returnedSet = {
-              name: set.name,
-              amount: set.cards.length,
-              completed: 0,
-              problem_card: 0,
-          }
-          for (let card of set.cards) {
-              if (card.score === 100) {
-                  returnedSet.completed++;
-              } else if (card.score < 100) {
-                  returnedSet.problem_card++;
-              }
-          }
-          return returnedSet;
+        const returnedSet = {
+            name: set.name,
+            amount: set.cards.length,
+            completed: 0,
+            problem_card: 0,
+        }
+        for (let card of set.cards) {
+            if (card.score === 100) {
+                returnedSet.completed++;
+            } else if (card.score < 100) {
+                returnedSet.problem_card++;
+            }
+        }
+        return returnedSet;
     };
 
     useEffect(() => {
@@ -149,10 +170,10 @@ const UserProfile = () => {
             ],
         });
 
+        const flashcardSetLastVisited = JSON.parse(localStorage.getItem('lastVisitedSet'));
+        const flashcardSetPreLastVisited = JSON.parse(localStorage.getItem('preLastVisitedSet'));
+        const flashcardSetPrePreLastVisited = JSON.parse(localStorage.getItem('prePreLastVisitedSet'));
 
-        const flashcardSetLastVisited = localStorage.getItem('lastVisitedSet');
-        const flashcardSetPreLastVisited = localStorage.getItem('preLastVisitedSet');
-        const flashcardSetPrePreLastVisited = localStorage.getItem('prePreLastVisitedSet');
         const flashcardData = [];
         if (flashcardSetLastVisited) {
             flashcardData.push(formatSet(flashcardSetLastVisited));
@@ -177,6 +198,16 @@ const UserProfile = () => {
                     <GameTitle>Flashcards</GameTitle>
                     <GameStats>Highest Score: 1500</GameStats>
                     <GameStats>Games Played: 30</GameStats>
+                    <FlashcardSetContainer>
+                        {flashcardSetsData.map((set, index) => (
+                            <FlashcardSetCard key={index}>
+                                <h3>{set.name}</h3>
+                                <p>Total Cards: {set.amount}</p>
+                                <p>Completed Cards: {set.completed}</p>
+                                <p>Problem Cards: {set.problem_card}</p>
+                            </FlashcardSetCard>
+                        ))}
+                    </FlashcardSetContainer>
                     <TryAgainButton to="/flashcards">Try Again</TryAgainButton>
                 </GameCard>
                 <Divider />
