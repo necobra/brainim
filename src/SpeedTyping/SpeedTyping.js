@@ -26,12 +26,11 @@ const SpeedTyping = () => {
     const targetText = targetTexts[currentTextIndex];
 
     const handleKeyPress = (e) => {
-        if(isEnd)
-            return;
+        if (isEnd) return;
 
         const key = e.key;
 
-        if (e.keyCode !== 32 && !keys.some((row) => row.includes(key.toLowerCase()))){
+        if (e.keyCode !== 32 && !keys.some((row) => row.includes(key.toLowerCase()))) {
             return;
         }
 
@@ -79,11 +78,37 @@ const SpeedTyping = () => {
         };
     }, [currentIndex, currentTextIndex]);
 
+    useEffect(() => {
+        if (endTime) {
+            saveResultToLocalStorage();
+        }
+    }, [endTime]);
+
+    useEffect(() => {
+        setCurrentTextIndex(Math.floor(Math.random() * (targetTexts.length - 1)));
+    },[]);
+
     const getWPM = () => {
         if (!endTime || !startTime) return 0;
         const timeDiff = (endTime - startTime) / 1000 / 60;
+
         const wordCount = targetText.split(' ').length;
+
         return Math.round(wordCount / timeDiff);
+    };
+
+    const saveResultToLocalStorage = () => {
+        const date = new Date().toISOString().split('T')[0];
+        const wpm = getWPM();
+        const newResult = {
+            date,
+            errors,
+            wpm,
+        };
+
+        const savedResults = JSON.parse(localStorage.getItem('speedTypingResults')) || [];
+        savedResults.push(newResult);
+        localStorage.setItem('speedTypingResults', JSON.stringify(savedResults));
     };
 
     const handleNextText = () => {
@@ -95,7 +120,7 @@ const SpeedTyping = () => {
         setEndTime(null);
         setErrors(0);
         setIsEnd(false);
-        setCurrentTextIndex(Math.floor(Math.random() * (targetTexts.length - 1)) + 1);
+        setCurrentTextIndex(Math.floor(Math.random() * (targetTexts.length - 1)));
     };
 
     return (

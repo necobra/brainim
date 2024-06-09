@@ -5,7 +5,7 @@ import {motion} from "framer-motion";
 import {Image} from "semantic-ui-react";
 
 const NavbarContainer = styled.nav`
-  width: 95vw;
+  width: 100vw;
   padding: 1rem 2rem;
   background: ${({ isScrolled }) => (isScrolled ? '#fff' : 'black')};
   color: ${({ isScrolled }) => (isScrolled ? '#000' : '#fff')};
@@ -35,26 +35,31 @@ const NavLinks = styled.div`
     }
   }
 `;
-const AuthButtons = styled.div`
-  margin-right: 50px;
-  display: flex;
-  gap: 1rem;
-`;
 
-const AuthButton = styled(motion.button)`
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  
-  color: ${({isScrolled}) => (isScrolled ? '#5a5a5a' : '#fff')};
-  background-color: ${({isScrolled}) => (isScrolled ? '#e0e1e2' : 'transparent')};
-  border: 1px solid ${({isScrolled}) => (isScrolled ? '#e0e1e2' : '#e0e1e2')} ;
-  border-radius: 5px;
-  cursor: pointer;
+const ProfileLink = styled(Link)`
+  display: flex;
+  margin-right: 50px;
+  align-items: center;
+  gap: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
 
   &:hover {
-    background-color: #21a1f1;
-    color: #fff;
+    color: #61dafb;
   }
+`;
+
+const ProfileImage = styled(Image)`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const UserName = styled.span`
+  font-size: 1rem;
+  color: ${({ isScrolled }) => (isScrolled ? '#000' : '#fff')};
 `;
 
 const Navbar = () => {
@@ -75,7 +80,7 @@ const Navbar = () => {
     return (
         <NavbarContainer isScrolled={isScrolled}>
             <Link to="/">
-                <Image src="/logo.png" width={50}></Image>
+                <Image src="/logo.png" width={50} />
             </Link>
             <NavLinks>
                 <Link to="/">Home</Link>
@@ -83,14 +88,10 @@ const Navbar = () => {
                 <Link to="/speedtyping">SpeedTyping</Link>
                 <Link to="/about">About Us</Link>
             </NavLinks>
-            <AuthButtons>
-                <AuthButton isScrolled={isScrolled} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                    Log In
-                </AuthButton>
-                <AuthButton isScrolled={isScrolled} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                    Sign Up
-                </AuthButton>
-            </AuthButtons>
+            <ProfileLink to="/user" isScrolled={isScrolled}>
+                <ProfileImage src="/profile.png" />
+                <UserName isScrolled={isScrolled}>Your profile</UserName>
+            </ProfileLink>
         </NavbarContainer>
     );
 };

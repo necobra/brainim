@@ -3,8 +3,6 @@ import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { format, subDays } from 'date-fns';
-import speedTypingResults from '../SpeedTyping/speedTypingResults.json';
 
 const fadeIn = keyframes`
   from {
@@ -109,12 +107,18 @@ const FlashcardSetCard = styled.div`
   }
 `;
 
+const NoDataMessage = styled.p`
+  font-size: 1.2rem;
+  color: #bbb;
+  text-align: center;
+`;
+
 const UserProfile = () => {
     const [speedTypingData, setSpeedTypingData] = useState({
         labels: [],
         datasets: [
             {
-                label: 'Average WPM',
+                label: 'WPM',
                 data: [],
                 backgroundColor: 'rgba(97, 218, 251, 0.2)',
                 borderColor: '#61dafb',
@@ -124,9 +128,8 @@ const UserProfile = () => {
     });
 
     const [flashcardSetsData, setFlashcardSetsData] = useState([]);
-
-    const highestWPM = speedTypingResults.accounts[0].logs.reduce((acc, log) => Math.max(acc, log.wpm), 0);
-    const gamesPlayed = speedTypingResults.accounts[0].logs.length;
+    const [hasSpeedTypingData, setHasSpeedTypingData] = useState(false);
+    const [hasFlashcardData, setHasFlashcardData] = useState(false);
 
     const formatSet = (set) => {
         const returnedSet = {
@@ -146,29 +149,28 @@ const UserProfile = () => {
     };
 
     useEffect(() => {
-        const logs = speedTypingResults.accounts[0].logs;
+        const speedTypingResults = JSON.parse(localStorage.getItem('speedTypingResults'));
 
-        const today = new Date();
-        const last7Days = Array.from({ length: 7 }, (_, i) => format(subDays(today, i), 'yyyy-MM-dd')).reverse();
+        if (speedTypingResults && speedTypingResults.length > 0) {
+            setHasSpeedTypingData(true);
+            const last15Results = speedTypingResults.slice(-15).reverse();
 
-        const averageWPM = last7Days.map(day => {
-            const dayLogs = logs.filter(log => log.date === day);
-            const totalWPM = dayLogs.reduce((acc, log) => acc + log.wpm, 0);
-            return dayLogs.length ? totalWPM / dayLogs.length : 0;
-        });
+            const labels = last15Results.map((log, index) => `Game ${index + 1}`);
+            const data = last15Results.map(log => log.wpm);
 
-        setSpeedTypingData({
-            labels: last7Days,
-            datasets: [
-                {
-                    label: 'Average WPM',
-                    data: averageWPM,
-                    backgroundColor: 'rgba(97, 218, 251, 0.2)',
-                    borderColor: '#61dafb',
-                    borderWidth: 1,
-                },
-            ],
-        });
+            setSpeedTypingData({
+                labels,
+                datasets: [
+                    {
+                        label: 'WPM',
+                        data,
+                        backgroundColor: 'rgba(97, 218, 251, 0.2)',
+                        borderColor: '#61dafb',
+                        borderWidth: 1,
+                    },
+                ],
+            });
+        }
 
         const flashcardSetLastVisited = JSON.parse(localStorage.getItem('lastVisitedSet'));
         const flashcardSetPreLastVisited = JSON.parse(localStorage.getItem('preLastVisitedSet'));
@@ -184,41 +186,56 @@ const UserProfile = () => {
         if (flashcardSetPrePreLastVisited) {
             flashcardData.push(formatSet(flashcardSetPrePreLastVisited));
         }
+
+        if (flashcardData.length > 0) {
+            setHasFlashcardData(true);
+        }
         setFlashcardSetsData(flashcardData);
     }, []);
 
     return (
         <ProfileContainer>
             <UserInfo>
-                <UserName>John Doe</UserName>
-                <UserEmail>johndoe@example.com</UserEmail>
+                <UserName>Your results for previous games</UserName>
+                {hasFlashcardData && hasSpeedTypingData ? (
+                    <UserEmail>✨ You have made a lot of progress lately ✨</UserEmail>
+                ) : null}
             </UserInfo>
             <GameStatsContainer>
                 <GameCard>
                     <GameTitle>Flashcards</GameTitle>
-                    <GameStats>Highest Score: 1500</GameStats>
-                    <GameStats>Games Played: 30</GameStats>
-                    <FlashcardSetContainer>
-                        {flashcardSetsData.map((set, index) => (
-                            <FlashcardSetCard key={index}>
-                                <h3>{set.name}</h3>
-                                <p>Total Cards: {set.amount}</p>
-                                <p>Completed Cards: {set.completed}</p>
-                                <p>Problem Cards: {set.problem_card}</p>
-                            </FlashcardSetCard>
-                        ))}
-                    </FlashcardSetContainer>
+                    <GameStats>Discover the ultimate flashcard game with two exciting modes! Master new knowledge with our Learning Mode, where you track your learning journey, or dive into Free Play Mode for a fun, flexible experience. Boost your skills and enjoy endless learning today!</GameStats>
+                    {hasFlashcardData ? (
+                        <FlashcardSetContainer>
+                            {flashcardSetsData.map((set, index) => (
+                                <FlashcardSetCard key={index}>
+                                    <h3>{set.name}</h3>
+                                    <p>Total Cards: {set.amount}</p>
+                                    <p>Completed Cards: {set.completed}</p>
+                                    <p>Problem Cards: {set.problem_card}</p>
+                                </FlashcardSetCard>
+                            ))}
+                        </FlashcardSetContainer>
+                    ) : (
+                        <NoDataMessage>No flashcard data available.</NoDataMessage>
+                    )}
                     <TryAgainButton to="/flashcards">Try Again</TryAgainButton>
                 </GameCard>
                 <Divider />
                 <GameCard>
                     <GameTitle>SpeedTyping</GameTitle>
-                    <GameStats>Highest WPM: {highestWPM}</GameStats>
-                    <GameStats>Games Played: {gamesPlayed}</GameStats>
                     <GameStats>
                         SpeedTyping is a fast-paced typing game that tests your typing speed and accuracy. Compete against the clock and improve your typing skills. Track your progress and see how you stack up against others.
                     </GameStats>
-                    <Line data={speedTypingData} />
+                    {hasSpeedTypingData ? (
+                        <>
+                            <GameStats>Highest WPM: {Math.max(...speedTypingData.datasets[0].data)}</GameStats>
+                            <GameStats>Games Played: {speedTypingData.labels.length}</GameStats>
+                            <Line data={speedTypingData} />
+                        </>
+                    ) : (
+                        <NoDataMessage>No speed typing data available.</NoDataMessage>
+                    )}
                     <TryAgainButton to="/speedtyping">Try Again</TryAgainButton>
                 </GameCard>
             </GameStatsContainer>

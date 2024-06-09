@@ -30,7 +30,7 @@ const Footer = () => {
         <FooterContainer>
             <Column>
                 <h4>About</h4>
-                <FooterLink href="/aboutUs">About Us</FooterLink>
+                <FooterLink href="/about">About Us</FooterLink>
                 <FooterLink href="https://distedu.ukma.edu.ua/">University site</FooterLink>
                 <FooterLink href="https://github.com/necobra/brainim"> Github</FooterLink>
             </Column>
