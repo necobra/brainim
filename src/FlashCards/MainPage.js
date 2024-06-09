@@ -16,7 +16,7 @@ const MainPage = () => {
             <div className="flashcard-sets-list">
                 {flashcardSetsData.sets.map((set, index) => (
                     <Link key={index} to={`/flashcards/set/${set.name}`} className="flashcard-set-item">
-                        <Card title={set.name} length={set.cards.length}/>
+                        <Card title={set.name} length={set.cards.length} />
                     </Link>
                 ))}
             </div>

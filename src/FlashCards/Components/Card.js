@@ -1,12 +1,11 @@
 import React from 'react';
 import './Card.css';
 
-const Card = ({title, length}) => {
+const Card = ({ title, length }) => {
     return (
         <div className="card">
             <div className="card-header">
                 <span className="card-title">{title}</span>
-
             </div>
             <div className="card-body">
                 <span className="card-terms">{length} terms</span>
