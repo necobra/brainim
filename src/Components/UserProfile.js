@@ -138,7 +138,7 @@ const UserProfile = () => {
         for (let card of set.cards) {
             if (card.score === 100) {
                 returnedSet.completed++;
-            } else if (card.score < 100) {
+            } else if (card.score < 100 && card.score > 0) {
                 returnedSet.problem_card++;
             }
         }

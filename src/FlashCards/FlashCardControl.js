@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {json, useParams} from 'react-router-dom';
 import FlashCard from './FlashCard';
 import LearningMode from './LearningMode';
 import './FlashCardControl.css';
@@ -27,11 +27,37 @@ const FlashCardControl = () => {
         if (set) {
             setFlashcards(set.cards);
         }
-        const lastVisitedSet = localStorage.getItem('lastVisitedSet');
-        const preLastVisitedSet = localStorage.getItem('preLastVisitedSet');
-        localStorage.setItem('lastVisitedSet', JSON.stringify(set));
-        localStorage.setItem('preLastVisitedSet', lastVisitedSet);
-        localStorage.setItem('prePreLastVisitedSet', preLastVisitedSet);
+        const lastVisitedSet = JSON.parse(localStorage.getItem('lastVisitedSet'))
+        const preLastVisitedSet = JSON.parse(localStorage.getItem('preLastVisitedSet'));
+        const prePreLastVisitedSet = JSON.parse(localStorage.getItem('prePreLastVisitedSet'));
+
+        if (preLastVisitedSet && setName === preLastVisitedSet.name) {
+            localStorage.setItem('lastVisitedSet', JSON.stringify(set));
+            localStorage.setItem('preLastVisitedSet', JSON.stringify(lastVisitedSet));
+            localStorage.setItem('prePreLastVisitedSet', JSON.stringify(prePreLastVisitedSet));
+            console.log("setName === preLastVisitedSet.name");
+        }
+        else if (prePreLastVisitedSet && setName === prePreLastVisitedSet.name) {
+            localStorage.setItem('lastVisitedSet', JSON.stringify(set));
+            localStorage.setItem('preLastVisitedSet', JSON.stringify(lastVisitedSet));
+            localStorage.setItem('prePreLastVisitedSet', JSON.stringify(preLastVisitedSet));
+            console.log("setName === prePreLastVisitedSet.name");
+        }
+        else if (lastVisitedSet && setName === lastVisitedSet.name) {
+            localStorage.setItem('lastVisitedSet', JSON.stringify(set));
+            localStorage.setItem('preLastVisitedSet', JSON.stringify(preLastVisitedSet));
+            localStorage.setItem('prePreLastVisitedSet', JSON.stringify(prePreLastVisitedSet));
+            console.log("setName === lastVisitedSet.name");
+        }
+        else {
+            localStorage.setItem('lastVisitedSet', JSON.stringify(set));
+            localStorage.setItem('preLastVisitedSet', JSON.stringify(lastVisitedSet));
+            localStorage.setItem('prePreLastVisitedSet', JSON.stringify(preLastVisitedSet));
+            console.log("setName !== lastVisitedSet.name");
+        }
+
+
+
         console.log(set);
         console.log(localStorage);
         console.log(localStorage.getItem('lastVisitedSet'));
