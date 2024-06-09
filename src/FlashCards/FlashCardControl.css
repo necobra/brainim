@@ -11,18 +11,24 @@
     background-color: #ece5e5;
 }
 
-.mode-buttons {
+.flashcard-control-header {
     background-color: #3a3939;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-/*.mode-buttons {*/
-/*    margin: 10px;*/
-/*}*/
+.return-back {
+    position: absolute;
+    left: 0;
+}
 
-.mode-buttons button {
+.mode-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.mode-buttons button, .return-back button{
     margin: 0 10px;
     padding: 10px 20px;
     font-size: 16px;
@@ -31,6 +37,12 @@
     background-color: transparent;
     color: white;
     font-weight: bold;
+}
+
+.mode-buttons button:hover, .return-back button:hover {
+    color: #fde641;
+
+    transition: color .5s;
 }
 
 .flashcard-control-buttons {

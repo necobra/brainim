@@ -106,12 +106,26 @@ const FlashCardControl = () => {
 
     const currentCard = flashcards[currentCardIndex];
 
+    function goBack() {
+        window.history.back();
+    }
+
     return (
         <div className="flashcard-control-container">
-            <div className="mode-buttons">
-                <button onClick={() => handleModeChange('cards')}>Cards</button>
-                <button onClick={() => handleModeChange('learning')}>Learning</button>
+            <div className="flashcard-control-header">
+                <div className="return-back">
+                    <button
+                        onClick={() => {goBack()}}
+                    >
+                        Return back
+                    </button>
+                </div>
+                <div className="mode-buttons">
+                    <button onClick={() => handleModeChange('cards')}>Cards</button>
+                    <button onClick={() => handleModeChange('learning')}>Learning</button>
+                </div>
             </div>
+
             {mode === 'cards' && (
                 <>
                     <div className={`flashcard-wrapper ${swipeDirection}`}>
