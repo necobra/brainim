@@ -29,10 +29,12 @@ const FlashCardControl = () => {
         }
         const lastVisitedSet = localStorage.getItem('lastVisitedSet');
         const preLastVisitedSet = localStorage.getItem('preLastVisitedSet');
-        localStorage.setItem('lastVisitedSet', set);
+        localStorage.setItem('lastVisitedSet', JSON.stringify(set));
         localStorage.setItem('preLastVisitedSet', lastVisitedSet);
         localStorage.setItem('prePreLastVisitedSet', preLastVisitedSet);
-
+        console.log(set);
+        console.log(localStorage);
+        console.log(localStorage.getItem('lastVisitedSet'));
     }, [setName]);
 
     const handleFlip = () => {
