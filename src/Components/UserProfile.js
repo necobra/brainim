@@ -114,6 +114,8 @@ const NoDataMessage = styled.p`
 `;
 
 const UserProfile = () => {
+    const gamesPlayed = JSON.parse(localStorage.getItem('speedTypingResults')).length || [];
+
     const [speedTypingData, setSpeedTypingData] = useState({
         labels: [],
         datasets: [
@@ -230,7 +232,7 @@ const UserProfile = () => {
                     {hasSpeedTypingData ? (
                         <>
                             <GameStats>Highest WPM: {Math.max(...speedTypingData.datasets[0].data)}</GameStats>
-                            <GameStats>Games Played: {speedTypingData.labels.length}</GameStats>
+                            <GameStats>Games Played: {gamesPlayed}</GameStats>
                             <Line data={speedTypingData} />
                         </>
                     ) : (

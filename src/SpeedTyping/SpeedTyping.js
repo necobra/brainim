@@ -48,14 +48,14 @@ const SpeedTyping = () => {
             setUserInput((prev) => prev + key);
             setCurrentIndex((prevIndex) => prevIndex + 1);
             setIncorrectIndex(-1);
+
+            if (currentIndex + 1 === targetText.length) {
+                setEndTime(new Date());
+                setIsEnd(true);
+            }
         } else {
             setIncorrectIndex(currentIndex);
             setErrors((prevErrors) => prevErrors + 1);
-        }
-
-        if (currentIndex + 1 === targetText.length) {
-            setEndTime(new Date());
-            setIsEnd(true);
         }
     };
 
