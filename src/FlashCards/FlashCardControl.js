@@ -11,8 +11,8 @@ const FlashCardControl = () => {
     const [learningFlashcards, setLearningFlashcards] = useState([]);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
-    const [mode, setMode] = useState('cards'); // Default mode
-    const [swipeDirection, setSwipeDirection] = useState(''); // Add swipe direction state
+    const [mode, setMode] = useState('cards');
+    const [swipeDirection, setSwipeDirection] = useState('');
 
     const [visualCurrentCardIndex, setVisualCurrentCardIndex] = useState(0);
 
@@ -74,7 +74,7 @@ const FlashCardControl = () => {
         setTimeout(() => {
             setCurrentCardIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
             setSwipeDirection('');
-        }, 300); // Duration of the swipe animation
+        }, 300);
     };
 
     const handlePrev = () => {
@@ -84,7 +84,7 @@ const FlashCardControl = () => {
             setIsFlipped(false);
             setCurrentCardIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
             setSwipeDirection('');
-        }, 300); // Duration of the swipe animation
+        }, 300);
     };
 
     const handleModeChange = (newMode) => {

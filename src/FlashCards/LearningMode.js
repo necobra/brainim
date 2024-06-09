@@ -14,7 +14,7 @@ const LearningMode = ({flashcards, onRestart, name}) => {
     const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
     const [attempts, setAttempts] = useState({});
     const [isEndScreen, setIsEndScreen] = useState(false);
-    const [wrongAnswerIndex, setWrongAnswerIndex] = useState(null); // Track wrong answer index
+    const [wrongAnswerIndex, setWrongAnswerIndex] = useState(null);
     const audioRef = useRef(null);
     const [readyToContinue, setReadyToContinue] = useState(false);
     const flashcardAmount = flashcards.length;
@@ -213,9 +213,9 @@ const LearningMode = ({flashcards, onRestart, name}) => {
     };
 
     const getProgressBarColor = (score) => {
-        if (score >= 80) return '#4caf50'; // Green
-        if (score >= 50) return '#ffeb3b'; // Yellow
-        return '#f44336'; // Red
+        if (score >= 80) return '#4caf50';
+        if (score >= 50) return '#ffeb3b';
+        return '#f44336';
     };
 
     if (flashcards.length < 4) {
@@ -293,7 +293,7 @@ const LearningMode = ({flashcards, onRestart, name}) => {
                                 ukrainian: "mock",
                                 english: "mock"
                             }, -1)}
-                    >Dont know?
+                    >Don't know?
                     </button>
                 </div>
             </div>

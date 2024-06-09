@@ -1,4 +1,3 @@
-// ArrowButton.js
 import React from 'react';
 import './ArrowButton.css';
 

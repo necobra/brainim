@@ -1,7 +1,12 @@
-/* src/Keyboard.css */
 .keyboard {
     display: inline-block;
     margin: 20px auto;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .keyboard-row {
@@ -20,11 +25,12 @@
     border-radius: 4px;
     background-color: #f0f0f0;
     font-size: 16px;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 .key.active {
     background-color: yellow;
+    transform: scale(1.1);
 }
 
 .key.highlight {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import flashcardSetsDataJson from './flashcardSets.json';
 import './MainPage.css';
-import Card from "./Components/Card"; // Ensure to create this CSS file for styling
+import Card from "./Components/Card";
 
 const MainPage = () => {
     let flashcardSetsData = JSON.parse(localStorage.getItem('flashcardSets'));
