@@ -1,8 +1,10 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import './LearningMode.css';
 import './Components/QuestionCard.css';
+import {useParams} from "react-router-dom";
 
-const LearningMode = ({ flashcards, onRestart }) => {
+const LearningMode = ({flashcards, onRestart, name}) => {
+    const { setName } = useParams();
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [problemCards, setProblemCards] = useState([]);
     const [answers, setAnswers] = useState([]);
@@ -25,13 +27,15 @@ const LearningMode = ({ flashcards, onRestart }) => {
 
 
     useEffect(() => {
+        console.log(setName);
+    }, []);
+
+    useEffect(() => {
         setCurrentCardChanged(false);
         console.log("set current card " + currentCardIndex);
         setCurrentCard(currentCardIndex < flashcards.length ? flashcards[currentCardIndex] : problemCards[0]);
         setCurrentCardChanged(true);
     }, [currentCardIndex, flashcards, problemCards, readyToContinue]);
-
-
 
 
     useEffect(() => {
@@ -58,7 +62,9 @@ const LearningMode = ({ flashcards, onRestart }) => {
 
     useEffect(() => {
         const handleKeyDown = (event) => {
-            if (event.key === 'Enter') {
+            const ignoredKeys = ['Escape', 'Control', 'Enter', 'Alt', 'Shift', 'Meta', 'Tab', 'CapsLock'];
+
+            if (!ignoredKeys.includes(event.key)) {
                 handleKeyPress();
             }
         };
@@ -81,8 +87,6 @@ const LearningMode = ({ flashcards, onRestart }) => {
         }
         console.log("loadNextCard curIndex" + currentCardIndex);
     };
-
-
 
 
     useEffect(() => {
@@ -148,7 +152,7 @@ const LearningMode = ({ flashcards, onRestart }) => {
                 loadNextCard(correctAnswersCount + 1);
             }
 
-            setAttempts({ ...attempts });
+            setAttempts({...attempts});
         }, 1000);
     };
 
@@ -178,14 +182,18 @@ const LearningMode = ({ flashcards, onRestart }) => {
                     const updatedCard = updatedFlashcards.find(
                         updated => updated.english === card.english && updated.ukrainian === card.ukrainian
                     );
-                    return updatedCard ? { ...card, score: updatedCard.score } : card;
+                    return updatedCard ? {...card, score: updatedCard.score} : card;
                 })
             };
         });
 
-        const updatedData = { sets: updatedSets };
+        const updatedData = {sets: updatedSets};
 
         localStorage.setItem('flashcardSets', JSON.stringify(updatedData));
+
+        // update last visited set result
+        const currentSet = updatedData.sets.find(set => set.name === setName);
+        localStorage.setItem('lastVisitedSet', JSON.stringify(currentSet));
     };
 
     const restartSession = () => {
@@ -221,15 +229,15 @@ const LearningMode = ({ flashcards, onRestart }) => {
     if (isEndScreen) {
         return (
             <div className="end-screen">
-                <audio ref={audioRef} src="/success.mp3" />
+                <audio ref={audioRef} src="/success.mp3"/>
                 <h2>Productive session!</h2>
-                <button className="" onClick={() => restartSession()}   >Restart Session</button>
+                <button className="" onClick={() => restartSession()}>Restart Session</button>
                 <ul>
                     {flashcards.map((card, index) => (
                         <li key={index} className="end-screen-card">
                             <div className="word-pair">
                                 <div>
-                                    <strong>English:</strong> {card.english} <br />
+                                    <strong>English:</strong> {card.english} <br/>
                                 </div>
                                 <div>
                                     <strong>Ukrainian:</strong> {card.ukrainian}
@@ -253,10 +261,9 @@ const LearningMode = ({ flashcards, onRestart }) => {
     }
 
 
-
     return (
         <div className="learning-mode-container">
-            <audio ref={audioRef} src="/success.mp3" />
+            <audio ref={audioRef} src="/success.mp3"/>
             <div className="answer-count">
                 {correctAnswersCount}/{flashcardAmount}
             </div>
@@ -270,18 +277,24 @@ const LearningMode = ({ flashcards, onRestart }) => {
                 <div className="answers">
                     {
                         answers.map((answer, index) => (
-                        <button key={index}
-                                className={`answer-button ${showAnswer && answer.ukrainian === currentCard.ukrainian ? 'correct' : ''} ${showAnswer && selectedAnswer && index === wrongAnswerIndex ? 'wrong' : ''}`}
-                                onClick={() => handleAnswerSelection(answer, index)}
-                                disabled={showAnswer}
-                        >
+                            <button key={index}
+                                    className={`answer-button ${showAnswer && answer.ukrainian === currentCard.ukrainian ? 'correct' : ''} ${showAnswer && selectedAnswer && index === wrongAnswerIndex ? 'wrong' : ''}`}
+                                    onClick={() => handleAnswerSelection(answer, index)}
+                                    disabled={showAnswer}
+                            >
 
-                            {answer.ukrainian}
-                        </button>
-                    ))}
+                                {answer.ukrainian}
+                            </button>
+                        ))}
                 </div>
                 <div className="footer">
-                    <span className="hint-text">Dont know?</span>
+                    <button className="hint-text"
+                            onClick={() => handleAnswerSelection({
+                                ukrainian: "mock",
+                                english: "mock"
+                            }, -1)}
+                    >Dont know?
+                    </button>
                 </div>
             </div>
 
