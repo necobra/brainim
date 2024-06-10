@@ -114,7 +114,7 @@ const NoDataMessage = styled.p`
 `;
 
 const UserProfile = () => {
-    const gamesPlayed = JSON.parse(localStorage.getItem('speedTypingResults')).length || [];
+    const [gamesPlayed, setGamesPlayed] = useState(0);
 
     const [speedTypingData, setSpeedTypingData] = useState({
         labels: [],
@@ -154,6 +154,7 @@ const UserProfile = () => {
         const speedTypingResults = JSON.parse(localStorage.getItem('speedTypingResults'));
 
         if (speedTypingResults && speedTypingResults.length > 0) {
+            setGamesPlayed(speedTypingResults.length);
             setHasSpeedTypingData(true);
             const last15Results = speedTypingResults.slice(-15).reverse();
 
